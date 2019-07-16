@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+<title>Registration</title>
+{% endblock title %}
+
+{% block body %}
+<div>
+  <form method="POST" action="{% url 'user_auth:registration' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {% for field in form %}
+      <p>{{ field.label }}: {{ field }}</p>
+      <p>{{ field.errors }}</p>
+    {% endfor %}
+    <p>{{ form.errors }}</p>
+    <input type="submit" name='submit' value='Registration'>
+  </form>
+</div>
+{% endblock body %}

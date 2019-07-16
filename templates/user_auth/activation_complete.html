@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+<title>Activation Complete</title>
+{% endblock title %}
+
+
+{% block body %}
+<p>激活完成！<a href="{% url 'user_auth:index' %}">回到首页</a></p>
+{% endblock body %}
+    
+    

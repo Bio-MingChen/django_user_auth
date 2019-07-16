@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+<title>Registration Completion</title>
+{% endblock title %}
+
+
+{% block body %}
+<p>注册完成，已经发送邮件到您的邮箱，请登陆邮箱并激活账户</p>
+<p><button id='send-email'>没收到？点击重新发送</button></p>
+<p><a href="{% url 'user_auth:index' %}">回到首页</a></p>
+{% endblock body %}
+
+{% block js %}
+<script>
+function settime($obj, time){ 
+    //该函数用于限定重新发送邮件的时间
+    if(time == 0){
+        $obj.removeAttr('disabled');
+        $obj.text('点击重新发送')
+        return; //这里的return是必须的，否则函数将无限循环下去！！
+    } else {
+        $obj.attr('disabled',true);
+        $obj.text('重新发送(' + time + ')');
+        time --;
+    }
+    setTimeout(function(){settime($obj, time)}, 1000)
+}
+
+$(document).ready(function(){
+    $('#send-email').on('click',function(){
+        $.get("{% url 'user_auth:registration_resend_email' username email %}",
+            function(data,status){
+                if(status ==='success') {
+                    alert(data)
+                }
+            });
+        settime($(this),10)
+    });
+});
+</script>    
+{% endblock js %}
+    
+
+    

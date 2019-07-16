@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+<title>Login Page</title>
+{% endblock title %}
+
+{% block body %}
+<div>
+    <form action="{% url 'user_auth:login' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>{{ field.label }}: {{ field }}</p>
+      {% endfor %}
+      <p>{{ error_message }}</p>
+    <input type="submit" value="登陆">
+    </form>
+    <p><a href="{% url 'user_auth:password_send_email' %}">忘记用户名或密码？</a></p>
+    <p><a href="{% url 'user_auth:registration' %}">注册新用户</a></p>
+    <p><a href="{% url 'user_auth:index' %}">返回首页</a></p>
+</div>
+{% endblock body %}
